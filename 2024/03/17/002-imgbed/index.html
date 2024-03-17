@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>建站要考虑的问题：用什么图床服务？ - Hilooong - 分享日常思考和新鲜事</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hilooong - 分享日常思考和新鲜事"><meta name="msapplication-TileImage" content="/img/icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hilooong - 分享日常思考和新鲜事"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="我把这个问题丢给Kimi，得到的回到如下：  IMG.TG:  特点：国内访问速度快，支持CDN，图片大小限制为5MB，存储容量不限，但每月限制500张上传。 适用性：适合需要快速访问和有一定上传频率的用户。   流浪图床:  特点：用户友好，支持多图上传，图片大小限制为5MB，存储容量不限。 适用性：适合对稳定性要求不高，且希望简单上传图片的用户。"><meta property="og:type" content="blog"><meta property="og:title" content="建站要考虑的问题：用什么图床服务？"><meta property="og:url" content="https://hilooong.com/2024/03/17/002-imgbed/"><meta property="og:site_name" content="Hilooong - 分享日常思考和新鲜事"><meta property="og:description" content="我把这个问题丢给Kimi，得到的回到如下：  IMG.TG:  特点：国内访问速度快，支持CDN，图片大小限制为5MB，存储容量不限，但每月限制500张上传。 适用性：适合需要快速访问和有一定上传频率的用户。   流浪图床:  特点：用户友好，支持多图上传，图片大小限制为5MB，存储容量不限。 适用性：适合对稳定性要求不高，且希望简单上传图片的用户。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://s2.loli.net/2024/03/17/PQInSeVbXO9ijq2.png"><meta property="article:published_time" content="2024-03-17T13:47:41.000Z"><meta property="article:modified_time" content="2024-03-17T16:25:49.402Z"><meta property="article:author" content="Hilooong"><meta property="article:tag" content="个人博客"><meta property="article:tag" content="工具"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://s2.loli.net/2024/03/17/PQInSeVbXO9ijq2.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://hilooong.com/2024/03/17/002-imgbed/"},"headline":"建站要考虑的问题：用什么图床服务？","image":["https://s2.loli.net/2024/03/17/PQInSeVbXO9ijq2.png"],"datePublished":"2024-03-17T13:47:41.000Z","dateModified":"2024-03-17T16:25:49.402Z","author":{"@type":"Person","name":"Hilooong"},"publisher":{"@type":"Organization","name":"Hilooong - 分享日常思考和新鲜事","logo":{"@type":"ImageObject","url":"https://hilooong.com/img/icon.png"}},"description":"我把这个问题丢给Kimi，得到的回到如下：  IMG.TG:  特点：国内访问速度快，支持CDN，图片大小限制为5MB，存储容量不限，但每月限制500张上传。 适用性：适合需要快速访问和有一定上传频率的用户。   流浪图床:  特点：用户友好，支持多图上传，图片大小限制为5MB，存储容量不限。 适用性：适合对稳定性要求不高，且希望简单上传图片的用户。"}</script><link rel="canonical" href="https://hilooong.com/2024/03/17/002-imgbed/"><link rel="icon" href="/img/icon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-40R0CY5TVN" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-40R0CY5TVN');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/icon.png" alt="Hilooong - 分享日常思考和新鲜事" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于我</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zittur"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-03-17T13:47:41.000Z" title="2024/3/17 21:47:41">2024-03-17</time>发表</span><span class="level-item"><time dateTime="2024-03-17T16:25:49.402Z" title="2024/3/18 00:25:49">2024-03-18</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%BB%BA%E7%AB%99/">建站</a></span><span class="level-item">4 分钟读完 (大约670个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">建站要考虑的问题：用什么图床服务？</h1><div class="content"><p>我把这个问题丢给Kimi，得到的回到如下：</p>
+<ol>
+<li><p><strong>IMG.TG</strong>:</p>
+<ul>
+<li>特点：国内访问速度快，支持CDN，图片大小限制为5MB，存储容量不限，但每月限制500张上传。</li>
+<li>适用性：适合需要快速访问和有一定上传频率的用户。</li>
+</ul>
+</li>
+<li><p><strong>流浪图床</strong>:</p>
+<ul>
+<li>特点：用户友好，支持多图上传，图片大小限制为5MB，存储容量不限。</li>
+<li>适用性：适合对稳定性要求不高，且希望简单上传图片的用户。</li>
+</ul>
+<span id="more"></span>
+</li>
+<li><p><strong>聚合图床</strong>:</p>
+<ul>
+<li>特点：提供全球CDN服务，图片大小限制为5MB，存储容量不限，但可能会有维护情况。</li>
+<li>适用性：适合需要全球访问速度较快的用户。</li>
+</ul>
+</li>
+<li><p><strong>PICUI</strong>:</p>
+<ul>
+<li>特点：提供免费的公共图床服务，提供原图保护以及图片上传、外链等功能。</li>
+<li>适用性：适合需要原图保护和外链服务的用户。</li>
+</ul>
+</li>
+<li><p><strong>SM.MS</strong>:</p>
+<ul>
+<li>特点：老牌图床网站，支持免费图片外链，稳定运行多年，无需注册，支持原图，支持HTTPS。</li>
+<li>适用性：适合长期需要稳定外链服务的用户。</li>
+</ul>
+</li>
+<li><p><strong>imageLOL 笑果图床</strong>:</p>
+<ul>
+<li>特点：无需注册，支持HTTPS，最大限制单张图片5M，注册登录后可上传10M大小图片。</li>
+<li>适用性：适合需要快速上传和分享图片的用户。</li>
+</ul>
+</li>
+<li><p><strong>图壳</strong>:</p>
+<ul>
+<li>特点：国内服务器托管，无需注册即可上传，网站上没有注明文件大小限制。</li>
+<li>适用性：适合希望使用国内服务器加速的用户。</li>
+</ul>
+</li>
+<li><p><strong>ImgURL</strong>:</p>
+<ul>
+<li>特点：老牌免费图床服务，稳定性不错，无需注册，游客限制每日上传10张，单张图片不能超过5M。</li>
+<li>适用性：适合日常图片上传需求不大的用户。</li>
+</ul>
+</li>
+<li><p><strong>CatBox.moe</strong>:</p>
+<ul>
+<li>特点：无需注册即可上传，支持200MB大小的主流格式文件外链，支持HTTPS。</li>
+<li>适用性：适合需要上传大文件外链的用户。</li>
+</ul>
+</li>
+<li><p><strong>牛图网 (niupic.com)</strong>:</p>
+<ul>
+<li>特点：老牌图床网站，免注册即可上传，最大支持16MB，支持HTTPS。</li>
+<li>适用性：适合需要稳定图床服务的用户。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p>我看SM.MS不错嘛，就用这个了，实际上只有5GB的免费使用空间。</p>
+<p><img src="https://s2.loli.net/2024/03/17/PQInSeVbXO9ijq2.png" alt="5GB够用吗"></p>
+<p>大不了换着用嘛…</p>
+<p>穷鬼套装，能省就省🤣</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>建站要考虑的问题：用什么图床服务？</p><p><a href="https://hilooong.com/2024/03/17/002-imgbed/">https://hilooong.com/2024/03/17/002-imgbed/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Hilooong</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-03-17</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2024-03-18</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客</a><a class="link-muted mr-2" rel="tag" href="/tags/%E5%B7%A5%E5%85%B7/">工具</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" href="/" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>爱发电</span></a><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="buymeacoffee"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>送我杯咖啡</span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a><a class="button donate" data-type="paypal" onclick="document.getElementById(&#039;paypal-donate-form&#039;).submit()"><span class="icon is-small"><i class="fab fa-paypal"></i></span><span>Paypal</span></a><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" rel="noopener" id="paypal-donate-form"><input type="hidden" name="cmd" value="_donations"><input type="hidden" name="business" value="johnzittur@gmail.com"><input type="hidden" name="currency_code" value="USD"></form><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat-pay.png" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2024/03/17/003-add-readme/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">给这个博客网站写一个README！</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2024/03/17/001-hello-blog/"><span class="level-item">出海人怎么能不做个人博客网站呢？</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://hilooong.com/2024/03/17/002-imgbed/';
+            this.page.identifier = '2024/03/17/002-imgbed/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'zittur-github-io' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.png" alt="Hilooong"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Hilooong</p><p class="is-size-6 is-block">业余后端💻
+目标是成为全流程开发工程师🎯
+出海捕鱼中🚢
+</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Earth, Solar System</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">3</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">1</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">2</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/zittur" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/zittur"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/hilooong"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-03-17T14:00:36.075Z">2024-03-17</time></p><p class="title"><a href="/2024/03/17/003-add-readme/">给这个博客网站写一个README！</a></p><p class="categories"><a href="/categories/%E5%BB%BA%E7%AB%99/">建站</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-03-17T13:47:41.000Z">2024-03-17</time></p><p class="title"><a href="/2024/03/17/002-imgbed/">建站要考虑的问题：用什么图床服务？</a></p><p class="categories"><a href="/categories/%E5%BB%BA%E7%AB%99/">建站</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-03-17T07:45:36.070Z">2024-03-17</time></p><p class="title"><a href="/2024/03/17/001-hello-blog/">出海人怎么能不做个人博客网站呢？</a></p><p class="categories"><a href="/categories/%E5%BB%BA%E7%AB%99/">建站</a></p></div></article></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><!--!--><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2024/03/"><span class="level-start"><span class="level-item">三月 2024</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%BB%BA%E7%AB%99/"><span class="level-start"><span class="level-item">建站</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"><span class="tag">个人博客</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%B7%A5%E5%85%B7/"><span class="tag">工具</span><span class="tag">2</span></a></div></div></div></div></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">博客构建Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/icon.png" alt="Hilooong - 分享日常思考和新鲜事" height="28"></a><p class="is-size-7"><span>&copy; 2024 Hilooong</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">© 2024</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zittur"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
