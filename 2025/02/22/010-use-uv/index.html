@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>使用 uv 来管理 Python 之 uv 使用配置教程 - Hilooong - 分享日常思考和新鲜事</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hilooong - 分享日常思考和新鲜事"><meta name="msapplication-TileImage" content="/img/icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hilooong - 分享日常思考和新鲜事"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="我发现使用 uv 来管理 Python 的版本很方便，且下载依赖之类的操作也很快，整理下面这份详细的 uv 使用配置教程，适合作为以后新建 Python 项目时的参考文档。  1. uv 简介"><meta property="og:type" content="blog"><meta property="og:title" content="使用 uv 来管理 Python 之 uv 使用配置教程"><meta property="og:url" content="https://hilooong.com/2025/02/22/010-use-uv/"><meta property="og:site_name" content="Hilooong - 分享日常思考和新鲜事"><meta property="og:description" content="我发现使用 uv 来管理 Python 的版本很方便，且下载依赖之类的操作也很快，整理下面这份详细的 uv 使用配置教程，适合作为以后新建 Python 项目时的参考文档。  1. uv 简介"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://github.com/astral-sh/uv/assets/1309177/629e59c0-9c6e-4013-9ad4-adb2bcf5080d#only-light"><meta property="article:published_time" content="2025-02-22T14:10:39.000Z"><meta property="article:modified_time" content="2025-02-22T14:28:48.564Z"><meta property="article:author" content="Hilooong"><meta property="article:tag" content="工具"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://github.com/astral-sh/uv/assets/1309177/629e59c0-9c6e-4013-9ad4-adb2bcf5080d#only-light"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://hilooong.com/2025/02/22/010-use-uv/"},"headline":"使用 uv 来管理 Python 之 uv 使用配置教程","image":[],"datePublished":"2025-02-22T14:10:39.000Z","dateModified":"2025-02-22T14:28:48.564Z","author":{"@type":"Person","name":"Hilooong"},"publisher":{"@type":"Organization","name":"Hilooong - 分享日常思考和新鲜事","logo":{"@type":"ImageObject","url":"https://hilooong.com/img/icon.png"}},"description":"我发现使用 uv 来管理 Python 的版本很方便，且下载依赖之类的操作也很快，整理下面这份详细的 uv 使用配置教程，适合作为以后新建 Python 项目时的参考文档。  1. uv 简介"}</script><link rel="canonical" href="https://hilooong.com/2025/02/22/010-use-uv/"><link rel="icon" href="/img/icon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-F093RZMDZJ" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-F093RZMDZJ');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/icon.png" alt="Hilooong - 分享日常思考和新鲜事" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于我</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zittur"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-02-22T14:10:39.000Z" title="2025/2/22 22:10:39">2025-02-22</time>发表</span><span class="level-item"><time dateTime="2025-02-22T14:28:48.564Z" title="2025/2/22 22:28:48">2025-02-22</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Python/">Python</a></span></div></div><h1 class="title is-3 is-size-4-mobile">使用 uv 来管理 Python 之 uv 使用配置教程</h1><div class="content"><p>我发现使用 uv 来管理 Python 的版本很方便，且下载依赖之类的操作也很快，整理下面这份详细的 uv 使用配置教程，适合作为以后新建 Python 项目时的参考文档。</p>
+<hr>
+<h2 id="1-uv-简介"><a href="#1-uv-简介" class="headerlink" title="1. uv 简介"></a>1. uv 简介</h2><span id="more"></span>
+
+<p><strong>uv</strong> 是一款用 Rust 编写的极快速 Python 包管理器和项目管理工具，目标是成为“Python 的 Cargo”。<br>官网: <a target="_blank" rel="noopener" href="https://docs.astral.sh/uv/">https://docs.astral.sh/uv/</a></p>
+<p><img src="https://github.com/astral-sh/uv/assets/1309177/629e59c0-9c6e-4013-9ad4-adb2bcf5080d#only-light" alt="uv"></p>
+<p>它能够替代传统的 pip、pip-tools 和 virtualenv 命令，并且在安装、解析依赖和创建虚拟环境等方面有着显著的性能优势，如上图（比 pip 快 10 ～ 100 倍）。此外，uv 还提供了全局缓存机制，既节省磁盘空间，也加速了后续操作。</p>
+<hr>
+<h2 id="2-安装-uv"><a href="#2-安装-uv" class="headerlink" title="2. 安装 uv"></a>2. 安装 uv</h2><p>在 macOS 上安装 uv 非常简单，有多种方式可供选择：</p>
+<h3 id="2-1-使用-Homebrew-安装"><a href="#2-1-使用-Homebrew-安装" class="headerlink" title="2.1 使用 Homebrew 安装"></a>2.1 使用 Homebrew 安装</h3><p>如果已经安装了 Homebrew，可以直接执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install uv</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-使用官方安装脚本"><a href="#2-2-使用官方安装脚本" class="headerlink" title="2.2 使用官方安装脚本"></a>2.2 使用官方安装脚本</h3><p>通过 curl 下载并执行安装脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -LsSf https://astral.sh/uv/install.sh | sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-通过-pip-安装"><a href="#2-3-通过-pip-安装" class="headerlink" title="2.3 通过 pip 安装"></a>2.3 通过 pip 安装</h3><p>如果更习惯 pip，也可以：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install uv</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-手动安装"><a href="#2-4-手动安装" class="headerlink" title="2.4 手动安装"></a>2.4 手动安装</h3><p>我一开始使用的是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -LsSf https://astral.sh/uv/install.sh | sh</span><br></pre></td></tr></table></figure>
+
+<p>来安装的，但是下载失败了，不能忍，我直接到 uv 的 github 仓库的 release 中下载对应版本：<a target="_blank" rel="noopener" href="https://github.com/astral-sh/uv/releases">https://github.com/astral-sh/uv/releases</a></p>
+<p>因为我还在用 Intel 芯片的 Mac，所以我下载的是：uv-x86_64-apple-darwin.tar.gz</p>
+<p>下载完成之后，解压，在 uv 的可执行文件路径下执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./uv --version</span><br></pre></td></tr></table></figure>
+
+<p>好家伙，网上下载的不让打开：Apple 无法验证“uv”是否包含可能危害 Mac 安全或泄漏隐私的恶意软件。</p>
+<p>直接运行以下命令<strong>移除文件的隔离属性</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xattr -d com.apple.quarantine uv</span><br></pre></td></tr></table></figure>
+
+<p>然后把 uv 移动到系统 PATH 中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mv</span> uv /usr/local/bin/uv</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，可以通过以下命令检查 uv 是否安装成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv -h 或者 uv --version</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-初始化项目"><a href="#3-初始化项目" class="headerlink" title="3. 初始化项目"></a>3. 初始化项目</h2><p>uv 提供了类似于其他现代包管理器的项目初始化命令，可以快速为的 Python 项目生成基础结构。</p>
+<h3 id="3-1-创建新项目"><a href="#3-1-创建新项目" class="headerlink" title="3.1 创建新项目"></a>3.1 创建新项目</h3><p>进入希望创建项目的目录，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv init myproject</span><br></pre></td></tr></table></figure>
+
+<p>此命令会在 <code>myproject</code> 目录下生成如下文件：</p>
+<ul>
+<li><strong>pyproject.toml</strong>：项目的基本元数据（名称、版本、描述、支持的 Python 版本等）。</li>
+<li><strong>uv.lock</strong>：自动生成的锁文件，用于记录所有依赖的具体版本。</li>
+<li>其他示例文件（如 <code>hello.py</code> 和 <code>README.md</code>），可以根据需要修改或删除。</li>
+</ul>
+<h3 id="3-2-查看生成的文件"><a href="#3-2-查看生成的文件" class="headerlink" title="3.2 查看生成的文件"></a>3.2 查看生成的文件</h3><p>进入项目目录后，可以使用 <code>ls</code> 命令查看项目结构：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> myproject</span><br><span class="line"><span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<p>将看到类似下面的输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.venv</span><br><span class="line">.gitignore</span><br><span class="line">.python-version</span><br><span class="line">hello.py</span><br><span class="line">pyproject.toml</span><br><span class="line">README.md</span><br><span class="line">uv.lock</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-虚拟环境管理"><a href="#4-虚拟环境管理" class="headerlink" title="4. 虚拟环境管理"></a>4. 虚拟环境管理</h2><p>uv 内置了虚拟环境管理功能，让可以轻松创建、切换和管理项目的虚拟环境。</p>
+<h3 id="4-1-创建虚拟环境"><a href="#4-1-创建虚拟环境" class="headerlink" title="4.1 创建虚拟环境"></a>4.1 创建虚拟环境</h3><p>在项目根目录下，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv venv</span><br></pre></td></tr></table></figure>
+
+<p>uv 会自动检测当前项目所需的 Python 版本（依据 <code>pyproject.toml</code> 中的 <code>requires-python</code>），并在项目目录下创建一个名为 <code>.venv</code> 的虚拟环境。</p>
+<h3 id="4-2-指定-Python-版本"><a href="#4-2-指定-Python-版本" class="headerlink" title="4.2 指定 Python 版本"></a>4.2 指定 Python 版本</h3><p>如果需要使用特定版本的 Python，可以使用 <code>--python</code> 参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv venv --python /usr/local/bin/python3.8</span><br></pre></td></tr></table></figure>
+
+<p>这样会基于指定的 Python 解释器创建虚拟环境。</p>
+<p><strong>也可以使用下面的命令来创建指定版本的虚拟环境</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv venv --python 3.11</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-激活虚拟环境"><a href="#4-3-激活虚拟环境" class="headerlink" title="4.3 激活虚拟环境"></a>4.3 激活虚拟环境</h3><p>激活虚拟环境（macOS 或 Linux）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> .venv/bin/activate</span><br></pre></td></tr></table></figure>
+
+<p>完成后，命令行前缀会显示虚拟环境名称，表示当前已经进入该环境。</p>
+<hr>
+<h2 id="5-依赖管理"><a href="#5-依赖管理" class="headerlink" title="5. 依赖管理"></a>5. 依赖管理</h2><p>uv 提供了简单直观的命令来添加、更新和删除依赖。</p>
+<h3 id="5-1-添加依赖"><a href="#5-1-添加依赖" class="headerlink" title="5.1 添加依赖"></a>5.1 添加依赖</h3><p>添加依赖与 npm 或 Cargo 类似，直接执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv add pandas</span><br></pre></td></tr></table></figure>
+
+<p>此命令会：</p>
+<ul>
+<li>解析并下载 <code>pandas</code> 及其依赖包；</li>
+<li>更新 <code>pyproject.toml</code> 中的依赖声明；</li>
+<li>将详细依赖信息写入 <code>uv.lock</code>。</li>
+</ul>
+<h3 id="5-2-删除依赖"><a href="#5-2-删除依赖" class="headerlink" title="5.2 删除依赖"></a>5.2 删除依赖</h3><p>如果不再需要某个包，可以执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv remove pandas</span><br></pre></td></tr></table></figure>
+
+<p>uv 会自动卸载 <code>pandas</code> 及其不再需要的依赖，同时更新锁文件。</p>
+<h3 id="5-3-更新依赖"><a href="#5-3-更新依赖" class="headerlink" title="5.3 更新依赖"></a>5.3 更新依赖</h3><p>如果需要升级某个依赖到最新版本，可使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv add --upgrade requests</span><br></pre></td></tr></table></figure>
+
+<p>这会更新 <code>requests</code> 包及其版本号，并同步到虚拟环境中。</p>
+<hr>
+<h2 id="6-区分开发与生产环境依赖"><a href="#6-区分开发与生产环境依赖" class="headerlink" title="6. 区分开发与生产环境依赖"></a>6. 区分开发与生产环境依赖</h2><p>uv 支持将依赖分组管理，以便区分开发（dev）和生产（production）环境的依赖。</p>
+<h3 id="6-1-添加分组依赖"><a href="#6-1-添加分组依赖" class="headerlink" title="6.1 添加分组依赖"></a>6.1 添加分组依赖</h3><p>例如，将 <code>pandas</code> 添加为开发依赖：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv add --group dev pandas</span><br></pre></td></tr></table></figure>
+
+<p>将 <code>requests</code> 添加为生产依赖：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv add --group production requests</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-查看-pyproject-toml"><a href="#6-2-查看-pyproject-toml" class="headerlink" title="6.2 查看 pyproject.toml"></a>6.2 查看 <code>pyproject.toml</code></h3><p>执行上述命令后，的 <code>pyproject.toml</code> 会自动生成类似下面的结构：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[project]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;myproject&quot;</span></span><br><span class="line"><span class="attr">version</span> = <span class="string">&quot;0.1.0&quot;</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Add your description here&quot;</span></span><br><span class="line"><span class="attr">requires-python</span> = <span class="string">&quot;&gt;=3.12&quot;</span></span><br><span class="line"><span class="attr">dependencies</span> = []</span><br><span class="line"></span><br><span class="line"><span class="section">[dependency-groups]</span></span><br><span class="line"><span class="attr">dev</span> = [</span><br><span class="line">    <span class="string">&quot;pandas&gt;=2.2.3&quot;</span>,</span><br><span class="line">]</span><br><span class="line"><span class="attr">production</span> = [</span><br><span class="line">    <span class="string">&quot;requests&gt;=2.32.3&quot;</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>这样可以方便在不同场景下安装相应的依赖。</p>
+<hr>
+<h2 id="7-运行项目和脚本"><a href="#7-运行项目和脚本" class="headerlink" title="7. 运行项目和脚本"></a>7. 运行项目和脚本</h2><p>uv 除了管理依赖，还集成了运行命令，让无需离开 uv 的管理体系即可运行代码。</p>
+<h3 id="7-1-运行项目中的脚本"><a href="#7-1-运行项目中的脚本" class="headerlink" title="7.1 运行项目中的脚本"></a>7.1 运行项目中的脚本</h3><p>假设 <code>hello.py</code> 内容如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Hello from myproject!&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>使用 uv 运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv run hello.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-2-使用-uv-运行带依赖的脚本"><a href="#7-2-使用-uv-运行带依赖的脚本" class="headerlink" title="7.2 使用 uv 运行带依赖的脚本"></a>7.2 使用 uv 运行带依赖的脚本</h3><p>如果脚本中引用了已安装的依赖（如 pandas），确保依赖已添加，然后运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv run hello.py</span><br></pre></td></tr></table></figure>
+
+<p>uv 会自动在项目的虚拟环境中执行代码。</p>
+<hr>
+<h2 id="8-高级功能"><a href="#8-高级功能" class="headerlink" title="8. 高级功能"></a>8. 高级功能</h2><p>除了基本的项目初始化、虚拟环境和依赖管理外，uv 还支持以下高级功能：</p>
+<h3 id="8-1-脚本依赖管理"><a href="#8-1-脚本依赖管理" class="headerlink" title="8.1 脚本依赖管理"></a>8.1 脚本依赖管理</h3><p>如果有单文件脚本，并希望为该脚本单独添加依赖，可以执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv add --script example.py requests</span><br></pre></td></tr></table></figure>
+
+<p>此命令会在脚本内嵌入依赖声明，然后在隔离环境中运行脚本时自动安装相应依赖。</p>
+<h3 id="8-2-多版本-Python-管理"><a href="#8-2-多版本-Python-管理" class="headerlink" title="8.2 多版本 Python 管理"></a>8.2 多版本 Python 管理</h3><p>uv 可以管理多个 Python 版本，帮助快速切换或安装不同版本的 Python：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv python install 3.10 3.11 3.12</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，可以通过：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv python pin 3.11</span><br></pre></td></tr></table></figure>
+
+<p>将项目固定使用某个 Python 版本。</p>
+<h2 id="9-其他"><a href="#9-其他" class="headerlink" title="9 其他"></a>9 其他</h2><p>我在尝试安装 browser-use webui 的时候涉及到 uv 的使用，以下是项目地址：<br><a target="_blank" rel="noopener" href="https://github.com/browser-use/web-ui?tab=readme-ov-file">browser-use webui</a></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>使用 uv 来管理 Python 之 uv 使用配置教程</p><p><a href="https://hilooong.com/2025/02/22/010-use-uv/">https://hilooong.com/2025/02/22/010-use-uv/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Hilooong</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-02-22</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-02-22</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E5%B7%A5%E5%85%B7/">工具</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2024/12/21/009-reopen-my-blog/"><span class="level-item">重新开启博客</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://hilooong.com/2025/02/22/010-use-uv/';
+            this.page.identifier = '2025/02/22/010-use-uv/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'zittur-github-io' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/my_avatar.jpeg" alt="Hilooong"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Hilooong</p><p class="is-size-6 is-block">曾经是一个后端💻
+现在的目标是成为全流程开发工程师🎯
+正在出海捕鱼中🚢
+</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Earth, Solar System</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">10</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">4</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">5</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/zittur" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/zittur"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/hilooong"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-02-22T14:10:39.000Z">2025-02-22</time></p><p class="title"><a href="/2025/02/22/010-use-uv/">使用 uv 来管理 Python 之 uv 使用配置教程</a></p><p class="categories"><a href="/categories/Python/">Python</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-12-21T15:44:24.000Z">2024-12-21</time></p><p class="title"><a href="/2024/12/21/009-reopen-my-blog/">重新开启博客</a></p><p class="categories"><a href="/categories/%E9%9A%8F%E6%84%9F/">随感</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-12-21T15:33:23.365Z">2024-12-21</time></p><p class="title"><a href="/2024/12/21/003-add-readme/">给这个博客网站写一个README！</a></p><p class="categories"><a href="/categories/%E5%BB%BA%E7%AB%99/">建站</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-12-21T15:33:23.364Z">2024-12-21</time></p><p class="title"><a href="/2024/12/21/001-hello-blog/">出海人怎么能不做个人博客网站呢？</a></p><p class="categories"><a href="/categories/%E5%BB%BA%E7%AB%99/">建站</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-03-26T11:06:30.000Z">2024-03-26</time></p><p class="title"><a href="/2024/03/26/008-my-shortcomings/">我的短板</a></p><p class="categories"><a href="/categories/%E9%9A%8F%E6%84%9F/">随感</a></p></div></article></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><!--!--><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2025/02/"><span class="level-start"><span class="level-item">二月 2025</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2024/12/"><span class="level-start"><span class="level-item">十二月 2024</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2024/03/"><span class="level-start"><span class="level-item">三月 2024</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Python/"><span class="level-start"><span class="level-item">Python</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%BB%BA%E7%AB%99/"><span class="level-start"><span class="level-item">建站</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E9%9A%8F%E6%84%9F/"><span class="level-start"><span class="level-item">随感</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Antonio/"><span class="tag">Antonio</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"><span class="tag">个人博客</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%89%8D%E7%AB%AF/"><span class="tag">前端</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%B7%A5%E5%85%B7/"><span class="tag">工具</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%83%A1%E6%80%9D%E4%B9%B1%E6%83%B3/"><span class="tag">胡思乱想</span><span class="tag">3</span></a></div></div></div></div></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">博客构建Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/icon.png" alt="Hilooong - 分享日常思考和新鲜事" height="28"></a><p class="is-size-7"><span>&copy; 2025 Hilooong</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">© 2024</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/zittur"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
